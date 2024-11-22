@@ -37,6 +37,7 @@ export default defineEventHandler(async (event) => {
             statusCode: error.statusCode,
             statusMessage: error.statusMessage,
             message: error.message,
+            cause: error.cause,
           });
         }
       }
@@ -89,6 +90,7 @@ export default defineEventHandler(async (event) => {
           statusCode: error.statusCode,
           statusMessage: error.statusMessage,
           message: error.message,
+          cause: error.cause,
         });
       } else {
         throw createError({
@@ -100,7 +102,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  // await refreshToken();
+  // API runs here
   const playing = await getCurrentlyPlaying();
   //TODO move this to its own api
   // const recentlyPlayed = await getRecentlyPlayed();
