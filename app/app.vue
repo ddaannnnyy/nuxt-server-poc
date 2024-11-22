@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <pre>
-      {{ data }}
-    </pre>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-const { data } = await useFetch('/api/hello');
+
 </script>
 
 <style scoped></style>
