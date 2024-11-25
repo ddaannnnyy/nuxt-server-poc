@@ -1,8 +1,9 @@
 <template>
-    <div class="w-screen h-screen flex items-center justify-center bg-black">
+    <div class="w-screen h-screen flex items-center justify-center">
         <div class="h-full w-full bg-background  text-black relative z-20 overflow-hidden">
             <ClientOnly>
-                <SpotifyNowplaying :currently-playing="currentlyPlaying" :is-playing="isPlaying ?? false" />
+                <SpotifyNowplaying :key="nowPlayingKey" :currently-playing="currentlyPlaying"
+                    :is-playing="isPlaying ?? false" />
             </ClientOnly>
             <!-- <SpotifyRecentlyplayed :recently-played="recentlyPlayed" />
             <SpotifyQueue :spotify-queue="spotifyQueue" /> -->
@@ -13,9 +14,10 @@
 <script setup lang="ts">
 import type { CurrentlyPlaying, Track, CurrentlyPlayingQueue } from '@/../types';
 const recentlyPlayed = ref<Track[]>([]);
-const currentlyPlaying = ref<CurrentlyPlaying>();
+const currentlyPlaying = ref<CurrentlyPlaying | undefined>(undefined);
 const spotifyQueue = ref<CurrentlyPlayingQueue[]>([]);
 const isPlaying = ref(false);
+const nowPlayingKey = ref("0");
 
 // initial hydration and set the interval
 await getCurrentlyPlaying();
@@ -39,13 +41,12 @@ async function getQueue() {
         spotifyQueue.value = request.queue;
     }
 }
-// refreshes queue when current song changes
-// watch(() => currentlyPlaying.value, (newValue, oldValue) => {
-//     if (newValue?.item.id != oldValue?.item.id) {
-//         console.log('fetching queue');
-//         getQueue();
-//     }
-// })
+
+watch(() => currentlyPlaying.value, (newValue, oldValue) => {
+    if (newValue?.item.id != oldValue?.item.id) {
+        nowPlayingKey.value = crypto.randomUUID();
+    }
+})
 
 </script>
 

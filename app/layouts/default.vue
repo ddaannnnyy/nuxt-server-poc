@@ -7,7 +7,11 @@
 </template>
 
 <script setup lang="ts">
-
+useHead({
+    meta: [
+        { name: 'apple-mobile-web-app-capable', content: 'yes' }
+    ],
+});
 </script>
 
 <style scoped></style>
