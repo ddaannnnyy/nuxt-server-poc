@@ -76,7 +76,6 @@ export default defineEventHandler(async (event) => {
       if (data._data && data._data.access_token) {
         spotifyVariables.access = data._data.access_token;
       } else {
-        console.error(data);
         throw createError({
           statusCode: 500,
           statusMessage: "Internal Server Error",

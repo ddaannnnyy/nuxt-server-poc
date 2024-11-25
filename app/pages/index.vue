@@ -1,14 +1,9 @@
 <template>
     <div class="w-screen h-screen flex items-center justify-center bg-black">
-        <div class="h-full aspect-[4/3] bg-background rounded-2xl text-black relative z-20 overflow-hidden">
-            <SpotifyNamespan :text="`${currentlyPlaying?.item.name} - ${currentlyPlaying?.item.artists[0]?.name}`"
-                :playing="isPlaying ?? false" />
+        <div class="h-full w-full bg-background  text-black relative z-20 overflow-hidden">
             <ClientOnly>
                 <SpotifyNowplaying :currently-playing="currentlyPlaying" :is-playing="isPlaying ?? false" />
             </ClientOnly>
-            <div class="absolute w-full h-full top-0 left-[50%] scale-50">
-                <SpotifyUpnext :up-next="spotifyQueue[0]" :is-playing="isPlaying ?? false" />
-            </div>
             <!-- <SpotifyRecentlyplayed :recently-played="recentlyPlayed" />
             <SpotifyQueue :spotify-queue="spotifyQueue" /> -->
         </div>
@@ -24,7 +19,6 @@ const isPlaying = ref(false);
 
 // initial hydration and set the interval
 await getCurrentlyPlaying();
-getQueue();
 onNuxtReady(() => {
     setInterval(async () => {
         await getCurrentlyPlaying();
@@ -45,13 +39,13 @@ async function getQueue() {
         spotifyQueue.value = request.queue;
     }
 }
-
-watch(() => currentlyPlaying.value, (newValue, oldValue) => {
-    if (newValue?.item.id != oldValue?.item.id) {
-        console.log('fetching queue');
-        getQueue();
-    }
-})
+// refreshes queue when current song changes
+// watch(() => currentlyPlaying.value, (newValue, oldValue) => {
+//     if (newValue?.item.id != oldValue?.item.id) {
+//         console.log('fetching queue');
+//         getQueue();
+//     }
+// })
 
 </script>
 
