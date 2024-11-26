@@ -8,7 +8,6 @@
                     }}</span>
             </div>
         </Transition>
-        <button class="bg-primary p-8 rounded-full text-4xl" @click="startMusic">Start Music</button>
     </div>
 </template>
 
@@ -19,12 +18,6 @@ const formatted = useDateFormat(useNow(), 'HH:mm:ss');
 watch(() => formatted.value, (newValue, oldValue) => {
     timeArray.value = Array.from(formatted.value);
 });
-
-function startMusic() {
-    $fetch('/api/spotify/actions/togglePause', { method: 'PUT', body: { action: 'play' } });
-}
-
-
 
 </script>
 
