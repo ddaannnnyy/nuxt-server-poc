@@ -6,7 +6,7 @@
         <div class="album-art flex items-center justify-center z-20">
             <button @click.prevent="togglePause">
                 <img :src="currentlyPlaying.item.album.images[0]?.url" alt=""
-                    class="object-contain w-full shadow-2xl shadow-accent transition-transform duration-300 origin-center">
+                    class="object-contain max-w-[500px] w-full shadow-2xl shadow-accent transition-transform duration-300 origin-center">
             </button>
         </div>
         <div
@@ -66,7 +66,6 @@ function millisToMinutesAndSeconds(durationMS: number, progressMS: number) {
     );
 }
 function togglePause() {
-    console.log('isPaused', paused.value);
     if (paused.value) {
         $fetch('/api/spotify/actions/togglePause', { method: 'PUT', body: { action: 'play' } });
     } else {

@@ -5,8 +5,24 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  ssr: false,
+  supabase: {
+    redirectOptions: {
+      login: "/login",
+      callback: "/confirm",
+      include: undefined,
+      exclude: [],
+      cookieRedirect: false,
+    },
+  },
   runtimeConfig: {
-    hubspotAPI: process.env.HUBSPOT_API,
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: process.env.SUPABASE_KEY,
+    },
+    supabase: {
+      supabaseSecret: process.env.SUPABASE_SERVICE_KEY,
+    },
     spotify: {
       apiBase: process.env.SPOTIFY_API_BASE,
       accountBase: process.env.SPOTIFY_ACCOUNT_API_BASE,
@@ -17,5 +33,11 @@ export default defineNuxtConfig({
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     },
   },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/fonts", "@vueuse/nuxt"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxt/fonts",
+    "@vueuse/nuxt",
+    "@nuxtjs/supabase",
+    "@nuxt/image",
+  ],
 });
